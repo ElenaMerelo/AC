@@ -21,5 +21,5 @@ cat $PBS_NODEFILE
 
 for ((N=65536;N<67108865; N=N*2))
 do
-    $PBS_O_WORKDIR/listado1 $N
+    $PBS_O_WORKDIR/listado1_local $N
 done

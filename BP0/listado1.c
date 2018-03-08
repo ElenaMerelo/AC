@@ -9,16 +9,17 @@ Para ejecutar: ./listado1 longitud
 #include <stdlib.h>   //biblioteca para funciones atoi(), malloc() y free()
 #include <stdio.h>    //biblioteca donde se encuentra la función printf()
 #include <time.h>     //biblioteca donde se encuentra la función clock_gettime()
+#include <math.h>
 
-// #define PRINTF_ALL   //comentar para quitar el printf, que imprime todas las componentes
+//#define PRINTF_ALL   //comentar para quitar el printf, que imprime todas las componentes
 /* Solo puede estar definida una de las tres constantes VECTOR_ , luego solo uno
 de los tres defines siguientes puede estar descomentado:*/
-#define VECTOR_LOCAL  //descomentar para que los vectores sean variables locales (si se supera el tamaño de pila se generará segmentation fault)
-//#define VECTOR_GLOBAL   //descomentar para que los vectores sean variables globales (su longitud no estará limitada por el tamaño de la pila del programa)
+//#define VECTOR_LOCAL  //descomentar para que los vectores sean variables locales (si se supera el tamaño de pila se generará segmentation fault)
+#define VECTOR_GLOBAL   //descomentar para que los vectores sean variables globales (su longitud no estará limitada por el tamaño de la pila del programa)
 //#define VECTOR_DYNAMIC    //para que los vectores sean variables dinámicas (memoria reutilizable durante la ejecución)
 
 #ifdef VECTOR_GLOBAL
-#define MAX 33554432
+#define MAX pow(2, 32) -1
 double v1[MAX], v2[MAX], v3[MAX];
 #endif
 
