@@ -14,6 +14,23 @@
 
 + Stack variables declared in functions called from within a parallel region are private
 
++ The master construct does not imply a barrier. This construct is very similar to the single construct: the code inside the master construct is executed by only one (master) thread. But the difference is that the master construct does not imply a barrier while the single construct does.
+
++ Some constructs support the removal of a barrier, for instance the loop construct. A programmer can then omit the barrier by adding nowait clause to the loop construct.
+
+~~~c
+#pragma omp parallel
+{
+    #pragma omp for nowait
+    for (...)
+    {
+        // for loop body
+    }
+
+    // next instructions
+}
+~~~
+
 >`#pragma  omp  parallel  private(x)`
 + Each thread receives its own uninitialized variable x
 + The variable x falls out-of-scope after the parallel region

@@ -22,7 +22,7 @@ int main() {
       for (i=0; i<n; i++)
         b[i] = a;
 
-    #pragma omp single
+    #pragma omp master
     {
       for (i=0; i<n; i++){
         printf("b[%d] = %d\t",i,b[i]);
