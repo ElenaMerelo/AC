@@ -31,17 +31,11 @@ Para ejecutar: ./listado1_omp longitud
   #define omp_get_num_threads() 1
 #endif
 
-//#define PRINTF_ALL   //comentar para quitar el printf, que imprime todas las componentes
-/* Solo puede estar definida una de las tres constantes VECTOR_ , luego solo uno
-de los tres defines siguientes puede estar descomentado:*/
-//#define VECTOR_LOCAL  //descomentar para que los vectores sean variables locales (si se supera el tamaño de pila se generará segmentation fault)
-#define VECTOR_GLOBAL   //descomentar para que los vectores sean variables globales (su longitud no estará limitada por el tamaño de la pila del programa)
-//#define VECTOR_DYNAMIC    //para que los vectores sean variables dinámicas (memoria reutilizable durante la ejecución)
+//#define PRINTF_ALL
 
-#ifdef VECTOR_GLOBAL
-#define MAX 33554432
+#define MAX 67108865
 double v1[MAX], v2[MAX], v3[MAX];
-#endif
+
 
 int main(int argc, char **argv){
   int i;
@@ -54,26 +48,7 @@ int main(int argc, char **argv){
 
   unsigned int N= atoi(argv[1]);    //Máximo N= 2^32-1= 4294967295 (sizeof(unsigned int)= 4B)
 
-  #ifdef VECTOR_LOCAL
-    double v1[N], v2[N], v3[N];   //Tamaño variable local en tiempo de ejecución disponible en C a partir de actualización c99
-  #endif
-
-  #ifdef VECTOR_GLOBAL
-    if (N> MAX) N= MAX;
-  #endif
-
-  #ifdef VECTOR_DYNAMIC
-    double *v1, *v2, *v3;
-
-    v1= (double*) malloc(N*sizeof(double));   //malloc necesita el tamño en bytes
-    v2= (double*) malloc(N*sizeof(double));   //si no hay espacio suficiente malloc devuelve NULL
-    v3= (double*) malloc(N*sizeof(double));
-
-    if ((v1 == NULL) || (v2 == NULL) || (v3 == NULL)){
-      printf("Error en la reserva de espacio para los vectores \n");
-      exit(-2);
-    }
-  #endif
+  if (N> MAX) N= MAX;
 
   //Inicializar vectores
   #pragma omp parallel for
@@ -81,7 +56,8 @@ int main(int argc, char **argv){
       v1[i]= N*0.1 + i*0.1;
       v2[i]= N*0.1 - i*0.1;   //los valores dependen de N
     }
-    
+  #pragma omp barrier //para que se asignen correctamente los valores
+
   double start= omp_get_wtime();
 
   //Calcular suma de vectores
@@ -89,6 +65,7 @@ int main(int argc, char **argv){
     for(i= 0; i< N; i++)
       v3[i]= v1[i] + v2[i];
 
+  #pragma omp barrier
 
   double end= omp_get_wtime();
   double diff= end - start;
@@ -96,21 +73,10 @@ int main(int argc, char **argv){
   //Imprimir resultado de la suma y el tiempo de ejecución
   #ifdef PRINTF_ALL
   printf("Tiempo(seg): %11.9f\t / tamaño vectores: %u\n", diff, N);
-  for(i= 0; i< N; i++)
+  for(i= 0; i<N; i++)
     printf("/V1[%d] + V2[%d] = V3[%d] (%8.6f + %8.6f = %8.6f) /\n", i, i, i, v1[i], v2[i], v3[i]);
-
   #else
-    printf("Tiempo(seg.): %11.9f\t/Tamaño vectores:%u\t/V1[0] + V2[0]= V3[0](%8.6f+%8.6f=%8.6f)// V1[%d] + V2[%d]= V3[%d](%8.6f+%8.6f=%8.6f)/\n", diff, N, v1[0], v2[0], v3[0], N-1, N-1, N-1, v1[N-1], v2[N-1], v3[N-1]);
+    printf("Tiempo(seg): %11.9f\t / tamaño vectores: %u\t/ v1[0]+v2[0]=v3[0](%8.6f+%8.6f=%8.6f) / / v1[%d]+v2[%d]=v3[%d](%8.6f+%8.6f=%8.6f) /\n", diff, N, v1[0], v2[0], v3[0], N-1, N-1, N-1, v1[N-1], v2[N-1], v3[N-1]);
   #endif
 
-  //Primero y último componente de v1, v2 y v3:
-  printf("\nv1[0]: %d, v1[%d]: %d, v2[0]: %d, v2[%d]: %d, v3[0]: %d, v3[%d]: %d", v1[0], v1[N], v2[0], v2[N], v3[0], v3[N]);
-
-  #ifdef VECTOR_DYNAMIC
-  //Liberamos el espacio reservado para los vectores
-    free(v1);
-    free(v2);
-    free(v3);
-  #endif
-  return 0;
 }
