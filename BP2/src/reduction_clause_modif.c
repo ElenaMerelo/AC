@@ -1,3 +1,4 @@
+
 //Elena Merelo Molina
 
 #include <stdio.h>
@@ -10,7 +11,7 @@
 #endif
 
 int main(int argc, char **argv) {
-  int i, n=20, a[n],suma= 10;
+  int i, n=20, a[n],suma= 10, suma_local;
 
   if(argc < 2) {
     fprintf(stderr, "Faltan iteraciones\n");
@@ -26,8 +27,20 @@ int main(int argc, char **argv) {
 
   for (i=0; i<n; i++) a[i] = i;
 
-  #pragma omp single private(suma)
-    for (i=0; i<n; i++) suma += a[i];
+  #pragma omp parallel private(suma_local)
+  {
+    suma_local= 0;
+
+    #pragma omp for
+    for (i=0; i<n; i++)
+        suma_local += a[i];
+
+  //  #pragma omp barrier
+
+    #pragma omp atomic
+      suma += suma_local;
+  }
+
 
   printf("Tras 'parallel' suma=%d\n",suma);
 }
