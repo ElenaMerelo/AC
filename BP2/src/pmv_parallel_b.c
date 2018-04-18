@@ -20,6 +20,12 @@ código de la suma).
 #include <stdio.h>
 #include <time.h>
 
+#ifdef _OPENMP
+  #include <omp.h>
+#else
+  #define omp_get_thread_num() 0
+#endif
+
 #define V_GLOBAL
 //#define V_DYNAMIC
 #define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
@@ -39,7 +45,8 @@ int main(int argc, char **argv){
     exit(-1);
   }
 
-  n= atoi(argv[1]);
+  #pragma omp single copyprivate(n)
+    n= atoi(argv[1]);
 
   #ifdef V_GLOBAL
     if(n > MAX) n= MAX;
@@ -53,6 +60,7 @@ int main(int argc, char **argv){
 
     //Creamos una matriz usando un array de punteros a arrays
     m= (int**) malloc(n*sizeof(int*));
+
     for(i= 0; i< n; i++)
       m[i]= (int*) malloc(n*sizeof(int));
 
@@ -63,19 +71,31 @@ int main(int argc, char **argv){
   #endif
 
   //Inicializamos la matriz y los vectores
-  for(i= 0; i< n; i++){
-    v[i]= i;
-    r[i]= 0;
-    for(j= 0; j< n; j++)
-      m[i][j]= i+j;
+  #pragma omp parallel
+  {
+    #pragma omp for
+    for(i= 0; i< n; i++){
+      v[i]= i;
+      r[i]= 0;
+      for(j= 0; j< n; j++)
+        m[i][j]= i+j;
+    }
   }
 
   clock_gettime(CLOCK_REALTIME, &cgt1);
 
+  int suma_local;
   //Realizamos el producto de la matriz m por el vector v, guardando el resultado en r
-  for(i= 0; i< n; i++)
+  #pragma omp parallel
+  for(i= 0; i< n; i++){
+    suma_local= 0;
+    #pragma omp for
     for(j= 0; j< n; j++)
-      r[i] += m[i][j] * v[j];
+      suma_local += m[i][j] * v[j];
+
+    #pragma omp atomic
+    r[i] += suma_local;
+  }
 
   clock_gettime(CLOCK_REALTIME, &cgt2);
 

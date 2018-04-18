@@ -1,6 +1,4 @@
-
 //Elena Merelo Molina
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -35,12 +33,8 @@ int main(int argc, char **argv) {
     for (i=0; i<n; i++)
         suma_local += a[i];
 
-  //  #pragma omp barrier
-
     #pragma omp atomic
       suma += suma_local;
   }
-
-
   printf("Tras 'parallel' suma=%d\n",suma);
 }
