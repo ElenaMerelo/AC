@@ -1,4 +1,5 @@
-/* listado1_sections.c
+/* EJERCICIO 8
+listado1_sections.c
   Suma de dos vectores utilizando la directiva sections:
   v3 = v1 + v2
   Para compilar usar (-lrt: real time library):

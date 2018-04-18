@@ -1,4 +1,5 @@
-/* Implementar un programa en C con OpenMP, a partir del código del Listado 1, que calcule en paralelo la suma de dos vectores
+/* EJERCICIO 7
+Implementar un programa en C con OpenMP, a partir del código del Listado 1, que calcule en paralelo la suma de dos vectores
 (v3 = v1 + v2;  v3(i)=v1(i)+v2(i),  i=0,…N-1) usando las directivas parallel y for.
 
 Se deben paralelizar también las tareas asociadas a la inicialización de los vectores. Como en el código del Listado 1 se debe
@@ -73,6 +74,7 @@ int main(int argc, char **argv){
   //Imprimir resultado de la suma y el tiempo de ejecución
   #ifdef PRINTF_ALL
   printf("Tiempo(seg): %11.9f\t / tamaño vectores: %u\n", diff, N);
+
   for(i= 0; i<N; i++)
     printf("/V1[%d] + V2[%d] = V3[%d] (%8.6f + %8.6f = %8.6f) /\n", i, i, i, v1[i], v2[i], v3[i]);
   #else
