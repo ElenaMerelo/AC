@@ -25,7 +25,7 @@ código de la suma).
 #define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
 
 #ifdef V_GLOBAL
-  #define MAX 10000
+  #define MAX 55000
   int m[MAX][MAX], v[MAX], r[MAX];
 #endif
 

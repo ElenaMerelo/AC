@@ -90,13 +90,14 @@ int main(int argc, char **argv){
   int suma_local;
   for(i= 0; i< n; i++){
     suma_local= 0;
-    #pragma omp for
+    #pragma omp parallel for reduction(+:suma_local)
       for(j= 0; j< n; j++)
         suma_local += m[i][j] * v[j];
 
-      #pragma omp atomic
-      r[i] += suma_local;
+    #pragma omp atomic
+    r[i] += suma_local;
   }
+
   clock_gettime(CLOCK_REALTIME, &cgt2);
 
   ncgt= (double)(cgt2.tv_sec - cgt1.tv_sec) + (double) ((cgt2.tv_nsec - cgt1.tv_nsec) / (1.e+9));
