@@ -26,8 +26,8 @@ código de la suma).
   #define omp_get_thread_num() 0
 #endif
 
-//#define V_GLOBAL
-#define V_DYNAMIC
+#define V_GLOBAL
+//#define V_DYNAMIC
 #define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
 
 #ifdef V_GLOBAL
@@ -94,6 +94,7 @@ int main(int argc, char **argv){
 
     #pragma omp atomic
     r[i] += suma_local;
+
   }
 
   clock_gettime(CLOCK_REALTIME, &cgt2);
