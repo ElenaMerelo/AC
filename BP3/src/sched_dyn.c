@@ -11,16 +11,16 @@ int main(int argc, char **argv){
   int i, n= 200, chunk, a[n], suma= 0;
 
   if(argc < 3){
-    fprintf(stderr,"\nFalta chunk \n");
+    fprintf(stderr,"\nFalta chunk y/o iteraciones\n");
     exit(-1);
   }
 
   n= atoi(argv[1]);
 
-  if(n > 200){
+  if(n > 200)
     n= 200;
-    chunk= atoi(argv[2]);
-  }
+
+  chunk= atoi(argv[2]);
 
   for(i= 0; i< n; i++)
     a[i]= i;

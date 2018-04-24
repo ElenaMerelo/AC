@@ -7,7 +7,7 @@
 #endif
 
 int main(int argc, char **argv) {
-  int i, n = 20, a[n], suma=0;
+  int i, n, a[n], suma=0;
 
   if(argc < 2) {
     fprintf(stderr,"\nFaltan iteraciones\n");

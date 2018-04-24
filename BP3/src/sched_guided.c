@@ -7,7 +7,7 @@
 #endif
 
 int main(int argc, char **argv) {
-  int i, n = 20, chunk, a[n],suma=0;
+  int i, n= 20, chunk, a[n],suma=0;
 
   if(argc < 3) {
     fprintf(stderr,"\nFalta chunk y/o iteraciones\n");
@@ -16,13 +16,13 @@ int main(int argc, char **argv) {
 
   n = atoi(argv[1]);
 
-  if(n > 20){
+  if(n > 20)
     n= 20;
-    chunk= atoi(argv[2]);
-    if(chunk <= 0){
-      fprintf(stderr,"\nChunk incorrecto\n");
-      exit(-1);
-    }
+
+  chunk= atoi(argv[2]);
+  if(chunk <= 0){
+    fprintf(stderr,"\nChunk incorrecto\n");
+    exit(-1);
   }
 
   for (i=0; i<n; i++)
