@@ -28,7 +28,7 @@ código de la suma).
 
 #define V_GLOBAL
 //#define V_DYNAMIC
-#define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
+//#define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
 
 #ifdef V_GLOBAL
   #define MAX 56000
@@ -90,11 +90,7 @@ int main(int argc, char **argv){
   for(i= 0; i< n; i++){
     suma_local= 0;
     for(j= 0; j< n; j++)
-      suma_local += m[i][j] * v[j];
-
-    #pragma omp atomic
-    r[i] += suma_local;
-
+    r[i] += m[i][j] * v[j];
   }
 
   clock_gettime(CLOCK_REALTIME, &cgt2);

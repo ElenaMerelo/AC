@@ -87,17 +87,22 @@ int main(int argc, char **argv){
   clock_gettime(CLOCK_REALTIME, &cgt1);
 
   //Realizamos el producto de la matriz m por el vector v, guardando el resultado en r
-  int suma_local;
-  for(i= 0; i< n; i++){
-    suma_local= 0;
-    #pragma omp parallel for reduction(+:suma_local)
-      for(j= 0; j< n; j++)
-        suma_local += m[i][j] * v[j];
+  int suma_local= 0;
+  #pragma omp parallel private (i, j)
+  {
+    for(i= 0; i< n; i++){
+      #pragma omp for reduction(+:suma_local)
+        for(j= 0; j< n; j++)
+          suma_local += m[i][j] * v[j];
 
-    #pragma omp atomic
-    r[i] += suma_local;
+        #pragma omp single
+        {
+          r[i] = suma_local;
+          suma_local= 0;
+      }
+
+    }
   }
-
   clock_gettime(CLOCK_REALTIME, &cgt2);
 
   ncgt= (double)(cgt2.tv_sec - cgt1.tv_sec) + (double) ((cgt2.tv_nsec - cgt1.tv_nsec) / (1.e+9));
