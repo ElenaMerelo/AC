@@ -12,10 +12,10 @@ Autora: Elena Merelo Molina.*/
 #include <time.h>
 #include <omp.h>
 
-#define PRINTF_MATRIX // descomentar para imprimir la matriz triangular
-#define PRINTF_VECTOR // descomentar para imprimir el vector que va a ser multiplicado
-#define PRINTF_RESULT // descomentar para imprimir el vector resultante del producto
-#define PRINTF_SCHED // descomentar para imprimir el tipo de scheduling y el chunk usado
+//#define PRINTF_MATRIX // descomentar para imprimir la matriz triangular
+//#define PRINTF_VECTOR // descomentar para imprimir el vector que va a ser multiplicado
+//#define PRINTF_RESULT // descomentar para imprimir el vector resultante del producto
+//#define PRINTF_SCHED // descomentar para imprimir el tipo de scheduling y el chunk usado
 
 int main(int argc, char **argv){
   int n, i, j, suma_local;
@@ -29,7 +29,7 @@ int main(int argc, char **argv){
 
   n= atoi(argv[1]);
 
-  int **m, *v, *r;
+  int **m, *v, *r, x= omp_get_max_threads();
 
   v= (int*) malloc(n*sizeof(int));
   r= (int*) malloc(n*sizeof(int));
@@ -59,7 +59,7 @@ int main(int argc, char **argv){
   /*Realizamos el producto de la matriz triangular m por el vector v, guardando
   el resultado en r. Ponemos schedule a runtime para que desde la terminal podamos
   decidir cómo queremos que se reparta el trabajo entre las threads.*/
-  #pragma omp parallel num_threads(4) private(i, j, suma_local)
+  #pragma omp parallel num_threads(x) private(i, j, suma_local)
   {
      #pragma omp for schedule(runtime)
       for(i= 0; i< n; i++){
