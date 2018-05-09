@@ -7,7 +7,7 @@ int main(){
   int i= 15361;
 
   while(true){
-    if(i % 64 == 0){
+    if(i % 64 == 0 && i % 12 == 0){
       cout << i;
       exit(EXIT_SUCCESS);
     }

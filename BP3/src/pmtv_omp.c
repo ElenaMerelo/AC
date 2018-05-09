@@ -15,7 +15,7 @@ Autora: Elena Merelo Molina.*/
 //#define PRINTF_MATRIX // descomentar para imprimir la matriz triangular
 //#define PRINTF_VECTOR // descomentar para imprimir el vector que va a ser multiplicado
 //#define PRINTF_RESULT // descomentar para imprimir el vector resultante del producto
-//#define PRINTF_SCHED // descomentar para imprimir el tipo de scheduling y el chunk usado
+#define PRINTF_SCHED // descomentar para imprimir el tipo de scheduling y el chunk usado
 
 int main(int argc, char **argv){
   int n, i, j, suma_local;

@@ -6,7 +6,6 @@
 #PBS -q ac
 #Se imprime información del trabajo usando variables de entorno de PBS.
 
-export OMP_DYNAMIC=FALSE
 
 echo "Id. usuario del trabajo: $PBS_O_LOGNAME"
 echo "Id. del trabajo: $PBS_JOBID"
@@ -20,8 +19,11 @@ cat $PBS_NODEFILE
 
 clear
 
-for ((n= 0; n < 15364; n += 1))
-do
-  $PBS_O_WORKDIR/pmv_parallel_b_dyn 15000
-  $PBS_O_WORKDIR/pmv_parallel_b_dyn 30000
-done
+export OMP_SCHEDULE="static"
+$PBS_O_WORKDIR/pmtv_omp 15552
+
+export OMP_SCHEDULE="static,1"
+$PBS_O_WORKDIR/pmtv_omp 15552
+
+export OMP_SCHEDULE="static, 64"
+$PBS_O_WORKDIR/pmtv_omp 15552
