@@ -11,10 +11,10 @@ de que termine el programa.*/
 #include <stdio.h>
 #include <time.h>
 
-//#define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
+#define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
 
 int main(int argc, char **argv){
-  int n, i, j;
+  int tam, i, j;
   struct timespec cgt1, cgt2;
   double ncgt;  //para tiempo de ejecución
 
@@ -23,38 +23,41 @@ int main(int argc, char **argv){
     exit(-1);
   }
 
-  n= atoi(argv[1]);
+  tam= atoi(argv[1]);
 
-  int **m, *v, *r;
+  int **m, **n, **r;
 
-  v= (int*) malloc(n*sizeof(int));
-  r= (int*) malloc(n*sizeof(int));
+  //Reservamos espacio para las tres matrices
+  m= (int**) malloc(tam*sizeof(int*));
+  n= (int**) malloc(tam*sizeof(int*));
+  r= (int**) malloc(tam*sizeof(int*));
 
-  //Creamos una matriz usando un array de punteros a arrays
-  m= (int**) malloc(n*sizeof(int*));
-  for(i= 0; i< n; i++)
-    m[i]= (int*) malloc(n*sizeof(int));
+  for(i= 0; i< tam; i++){
+    m[i]= (int*) malloc(tam*sizeof(int));
+    n[i]= (int*) malloc(tam*sizeof(int));
+    r[i]= (int*) malloc(tam*sizeof(int));
+  }
 
-    if ((m == NULL) || (v == NULL) || (r == NULL)) {
+    if ((m == NULL) || (n == NULL) || (r == NULL)) {
       printf("Error en la reserva de espacio\n");
       exit(-2);
     }
 
 
   //Inicializamos la matriz y los vectores
-  for(i= 0; i< n; i++){
-    v[i]= i;
-    r[i]= 0;
-    for(j= 0; j< n; j++)
-      m[i][j]= (i <= j) ? i+j : 0;
+  for(i= 0; i< tam; i++){
+    for(j= 0; j< tam; j++)
+      m[i][j]= i+j;
+      n[i][j]= j;
+      r[i][j]= 0;
   }
 
   clock_gettime(CLOCK_REALTIME, &cgt1);
 
   //Realizamos el producto de la matriz triangular m por el vector v, guardando el resultado en r
-  for(i= 0; i< n; i++)
-    for(j= i; j< n; j++)
-      r[i] += m[i][j] * v[j];
+  for(i= 0; i< tam; i++)
+    for(j= 0; j< tam; j++)
+      r[i][j] += m[i][j] * n[i][j];
 
   clock_gettime(CLOCK_REALTIME, &cgt2);
 
@@ -63,29 +66,38 @@ int main(int argc, char **argv){
   //Para comprobar que hace bien el producto
   #ifdef PRINTF_RESULT
     printf("Matriz m: \n");
-    for(i= 0; i< n; i++){
-      for(j= 0; j< n; j++)
+    for(i= 0; i< tam; i++){
+      for(j= 0; j< tam; j++)
         printf("%d\t", m[i][j]);
       printf("\n");
     }
 
-    printf("Vector v: \n");
-    for(i= 0; i< n; i++)
-      printf("%d ", v[i]);
+    printf("Matriz n: \n");
+    for(i= 0; i< tam; i++){
+      for(j= 0; j< tam; j++)
+        printf("%d\t", n[i][j]);
+      printf("\n");
+    }
 
-    printf("Vector resultante del producto\n");
-    for(i= 0; i< n; i++)
-      printf("%d ", r[i]);
+    printf("Matriz resultante del producto\n");
+    for(i= 0; i< tam; i++){
+      for(j= 0; j< tam; j++)
+        printf("%d\t", r[i][j]);
+      printf("\n");
+    }
   #endif
 
-  printf("Tiempo de ejecución: %11.9f\t / r[0]= %d\t / r[%d]= %d\n", ncgt, r[0], n-1, r[n-1]);
+  printf("Tiempo de ejecución: %11.9f\t / r[0][0]= %d\t / r[%d][%d]= %d\n", ncgt, r[0][0], tam-1, tam-1, r[tam-1][tam-1]);
 
   //Liberación de memoria
-  for(int i= 0; i< n; i++)
+  for(int i= 0; i< tam; i++){
     free(m[i]);
+    free(n[i]);
+    free(r[i]);
+  }
 
     free(m);
+    free(n);
     free(r);
-    free(v);
 
 }
