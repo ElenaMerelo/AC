@@ -11,9 +11,9 @@ de que termine el programa.*/
 #include <stdio.h>
 #include <time.h>
 
-#define PRINTF_MATRIX_1 // descomentar para imprimir la matriz 1
-#define PRINTF_MATRIX_2 // descomentar para imprimir la matriz 2
-#define PRINTF_RESULT // descomentar para imprimir la matriz resultado del producto de las anteriores
+//#define PRINTF_MATRIX_1 // descomentar para imprimir la matriz 1
+//#define PRINTF_MATRIX_2 // descomentar para imprimir la matriz 2
+//#define PRINTF_RESULT // descomentar para imprimir la matriz resultado del producto de las anteriores
 
 int main(int argc, char **argv){
   int tam, i, j, k;

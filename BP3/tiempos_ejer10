@@ -1,0 +1,36 @@
+n=1250 local:
+Paralelo: 
+Tiempo de ejecución: 5.347085225	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+Secuencial: 
+Tiempo de ejecución: 3.821850657	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+Paralelo: 
+Tiempo de ejecución: 3.260411646	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+Secuencial: 
+Tiempo de ejecución: 3.813073563	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+Paralelo: 
+Tiempo de ejecución: 3.335946672	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+Secuencial: 
+Tiempo de ejecución: 3.938001056	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+Paralelo: 
+Tiempo de ejecución: 3.550180859	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+Secuencial: 
+Tiempo de ejecución: 3.886322385	 / r[0][0]= 0	 / r[1249][1249]= -1369965421
+
+n= 150 local:
+Paralelo: 
+Tiempo de ejecución: 0.044174477	 / r[0][0]= 0	 / r[149][149]= 4995225
+Secuencial: 
+Tiempo de ejecución: 0.002631689	 / r[0][0]= 0	 / r[149][149]= 4995225
+Paralelo: 
+Tiempo de ejecución: 0.020962677	 / r[0][0]= 0	 / r[149][149]= 4995225
+Secuencial: 
+Tiempo de ejecución: 0.002594066	 / r[0][0]= 0	 / r[149][149]= 4995225
+Paralelo: 
+Tiempo de ejecución: 0.022515869	 / r[0][0]= 0	 / r[149][149]= 4995225
+Secuencial: 
+Tiempo de ejecución: 0.002654550	 / r[0][0]= 0	 / r[149][149]= 4995225
+Paralelo: 
+Tiempo de ejecución: 0.024348706	 / r[0][0]= 0	 / r[149][149]= 4995225
+Secuencial: 
+Tiempo de ejecución: 0.002631524	 / r[0][0]= 0	 / r[149][149]= 4995225
+
