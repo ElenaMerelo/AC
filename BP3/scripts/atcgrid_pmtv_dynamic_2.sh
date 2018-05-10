@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 #Se asigna al trabajo el nombre pmv
-#PBS -N pmtv_dynamic
+#PBS -N pmtv_dynamic_2
 #Se asigna al trabajo la cola ac
 #PBS -q ac
 #Se imprime información del trabajo usando variables de entorno de PBS.
@@ -19,11 +19,5 @@ cat $PBS_NODEFILE
 
 clear
 
-export OMP_SCHEDULE="dynamic"
-$PBS_O_WORKDIR/pmtv_omp 15552
-
 export OMP_SCHEDULE="dynamic,1"
-$PBS_O_WORKDIR/pmtv_omp 15552
-
-export OMP_SCHEDULE="dynamic, 64"
 $PBS_O_WORKDIR/pmtv_omp 15552

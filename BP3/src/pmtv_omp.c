@@ -47,7 +47,7 @@ int main(int argc, char **argv){
 
   //Inicializamos la matriz y los vectores paralelamente
   for(i= 0; i< n; i++){
-    v[i]= i;
+    v[i]= 1;
     r[i]= 0;
     #pragma omp parallel for
     for(j= 0; j< n; j++)
@@ -67,7 +67,6 @@ int main(int argc, char **argv){
         for(j= i; j< n; j++)
           suma_local += m[i][j] * v[j];
 
-          #pragma omp atomic
           r[i] += suma_local;
       }
       #ifdef PRINTF_SCHED

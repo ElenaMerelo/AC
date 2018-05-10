@@ -1,0 +1,13 @@
+guided normal-- Tiempo de ejecución: 0.083031679	 / r[0]= -424754656	 / r[15551]= 483667202
+guided 1 -- Tiempo de ejecución: 0.096270130	 / r[0]= 120924576	 / r[15551]= 31102
+guided 64 -- Tiempo de ejecución: 0.094458821	 / r[0]= 120924576	 / r[15551]= 31102
+
+static normal-- 0.028281652
+static 1-- 0.022551383 
+static 64-- 0.23298709
+
+dynamic -- 0.021637203 
+dynamic 1 -- 0.022310745 
+dynamic 64 -- 0.021018442
+
+
