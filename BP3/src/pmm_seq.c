@@ -11,10 +11,12 @@ de que termine el programa.*/
 #include <stdio.h>
 #include <time.h>
 
-#define PRINTF_RESULT // descomentar para que imprima el resultado del producto de la matriz por el vector
+#define PRINTF_MATRIX_1 // descomentar para imprimir la matriz 1
+#define PRINTF_MATRIX_2 // descomentar para imprimir la matriz 2
+#define PRINTF_RESULT // descomentar para imprimir la matriz resultado del producto de las anteriores
 
 int main(int argc, char **argv){
-  int tam, i, j;
+  int tam, i, j, k;
   struct timespec cgt1, cgt2;
   double ncgt;  //para tiempo de ejecución
 
@@ -44,9 +46,9 @@ int main(int argc, char **argv){
     }
 
 
-  //Inicializamos la matriz y los vectores
-  for(i= 0; i< tam; i++){
-    for(j= 0; j< tam; j++)
+  //Inicializamos las matrices
+  for(i= 0; i< tam; i++)
+    for(j= 0; j< tam; j++){
       m[i][j]= i+j;
       n[i][j]= j;
       r[i][j]= 0;
@@ -54,31 +56,40 @@ int main(int argc, char **argv){
 
   clock_gettime(CLOCK_REALTIME, &cgt1);
 
+
   //Realizamos el producto de la matriz triangular m por el vector v, guardando el resultado en r
+  int suma_local= 0;
+
   for(i= 0; i< tam; i++)
     for(j= 0; j< tam; j++)
-      r[i][j] += m[i][j] * n[i][j];
+      for(k= 0; k< tam; k++)
+        r[i][j] += m[i][k] * n[k][j];
+
 
   clock_gettime(CLOCK_REALTIME, &cgt2);
 
   ncgt= (double)(cgt2.tv_sec - cgt1.tv_sec) + (double) ((cgt2.tv_nsec - cgt1.tv_nsec) / (1.e+9));
 
   //Para comprobar que hace bien el producto
-  #ifdef PRINTF_RESULT
+  #ifdef PRINTF_MATRIX_1
     printf("Matriz m: \n");
     for(i= 0; i< tam; i++){
       for(j= 0; j< tam; j++)
         printf("%d\t", m[i][j]);
       printf("\n");
     }
+  #endif
 
+  #ifdef PRINTF_MATRIX_2
     printf("Matriz n: \n");
     for(i= 0; i< tam; i++){
       for(j= 0; j< tam; j++)
         printf("%d\t", n[i][j]);
       printf("\n");
     }
+  #endif
 
+  #ifdef PRINTF_RESULT
     printf("Matriz resultante del producto\n");
     for(i= 0; i< tam; i++){
       for(j= 0; j< tam; j++)
@@ -96,8 +107,8 @@ int main(int argc, char **argv){
     free(r[i]);
   }
 
-    free(m);
-    free(n);
-    free(r);
+  free(m);
+  free(n);
+  free(r);
 
 }

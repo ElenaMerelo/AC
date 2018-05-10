@@ -10,6 +10,7 @@ de que termine el programa.*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <omp.h>
 
 #define PRINTF_MATRIX_1 // descomentar para imprimir la matriz 1
 #define PRINTF_MATRIX_2 // descomentar para imprimir la matriz 2
