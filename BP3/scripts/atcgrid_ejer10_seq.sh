@@ -24,5 +24,5 @@ export OMP_DYNAMIC=false
 for((N=1; N<13; N= N+1))
 do
   export OMP_NUM_THREADS=$N
-  $PBS_O_WORKDIR/pmm_seq 1250
+  $PBS_O_WORKDIR/pmm_seq 150
 done
