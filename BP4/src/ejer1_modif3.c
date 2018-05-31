@@ -11,13 +11,13 @@ int r[40000];
 
 int main(){
   time_t t;
-  int x1, x2, i, ii, aux1, aux2;
+  int x1, x2, i, ii, aux1[4];
   struct timespec cgt1, cgt2;
   double ncgt;
 
   for(int i=0; i<5000; i++) {
-      s[i].a = rand() % 5000;
-      s[i].b = rand() % 5000;
+      s[i].a = rand();
+      s[i].b = rand();
   }
 
   clock_gettime(CLOCK_REALTIME, &cgt1);
@@ -31,12 +31,16 @@ int main(){
   x1 *= 2;
   x2 *= 3;
 
-  for(ii=0; ii<40000; ii++){
-    aux1= x1; aux2= x2;
-    aux1 += ii*5000;
-    aux2 -= ii*5000;
+  for(ii=0; ii<40000; ii+=4){
+    aux1[0]=ii*5000;
+    aux1[1]=(ii+1)*5000;
+    aux1[2]=(ii+2)*5000;
+    aux1[3]=(ii+3)*5000;
 
-    if( aux1< aux2 ) r[ii]= aux1; else r[ii]= aux2;
+    if( x1<x2-2*aux1[0] ) r[ii]=x1+aux1[0]; else r[ii]=x2-aux1[0];
+    if( x1<x2-2*aux1[1] ) r[ii+1]=x1+aux1[1]; else r[ii+1]=x2-aux1[1];
+    if( x1<x2-2*aux1[2] ) r[ii+2]=x1+aux1[2]; else r[ii+2]=x2-aux1[2];
+    if( x1<x2-2*aux1[3] ) r[ii+3]=x1+aux1[3]; else r[ii+3]=x2-aux1[3];
   }
 
   clock_gettime(CLOCK_REALTIME, &cgt2);

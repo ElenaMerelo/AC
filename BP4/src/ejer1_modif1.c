@@ -9,7 +9,7 @@ struct{
 int main(){
   struct timespec cgt1, cgt2;
   double ncgt;  //para tiempo de ejecución
-  int i, x1, x2, r[40000];
+  int i, ii, x1, x2, r[40000];
   srand(time(NULL));
 
   for(i= 0; i< 5000; i++){
@@ -18,14 +18,14 @@ int main(){
   }
 
   clock_gettime(CLOCK_REALTIME, &cgt1);
-  for(int ii= 0; ii< 40000; ii++){
-    x1= 0;
-    x2= 0;
+  for(ii= 0; ii< 40000; ii++){
+    x1= 5000*ii;
+    x2= -5000*ii;
 
     for(i= 0; i< 5000; i++) {
-      x1 += 2*s[i].a + ii;
-      x2 += 3*s[i].b - ii;
-  }
+      x1 += 2*s[i].a;
+      x2 += 3*s[i].b;
+    }
 
     if (x1 < x2) r[ii]= x1;
     else r[ii]= x2;
